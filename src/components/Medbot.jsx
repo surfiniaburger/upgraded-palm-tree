@@ -30,7 +30,7 @@ const Chatbot = () => {
         language-code="en"
         max-query-length="-1"
       >
-        <df-messenger-chat-bubble chat-title="Agent Sep 22, 2024, 2:56:21 PM"></df-messenger-chat-bubble>
+        <df-messenger-chat-bubble chat-title="medZK Agent"></df-messenger-chat-bubble>
       </df-messenger>
       <style>
         {`
