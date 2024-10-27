@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider"
+import { UserProvider } from '@auth0/nextjs-auth0/client';
+import { Nav } from "@/components/nav";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -32,15 +34,23 @@ export default function RootLayout({
       <head/>
       
       <body className={inter.className}>
-      <ThemeProvider
+        <UserProvider>
+        <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
           >
-        {children}
+            <main id="app" className="d-flex flex-column h-100" data-testid="layout">
+            <Nav />
+            {children}
+            
+          </main>
+      
         </ThemeProvider>
-        </body>
+ 
+        </UserProvider>
+             </body>
     </html>
   );
 }

@@ -1,6 +1,9 @@
 "use client";
 import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "./navbar-menu";
+import { useUser } from "@auth0/nextjs-auth0/client";
+import Image from "next/image";
+import Link from "next/link";
+import { HoveredLink, Menu, MenuItem } from "./navbar-menu";
 import { cn } from "@/lib/utils";
 
 export function Nav() {
@@ -13,30 +16,51 @@ export function Nav() {
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
+  const { user, isLoading } = useUser();
+
   return (
-    <div
-      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
-    >
+    <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}>
       <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Services">
+        <MenuItem setActive={setActive} active={active} item="Menu">
           <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
+            <HoveredLink href="/">Home</HoveredLink>
             <HoveredLink href="/interface-design">Interface Design</HoveredLink>
             <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
             <HoveredLink href="/branding">Branding</HoveredLink>
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Products">
-        <HoveredLink href="/hobby">Hobby</HoveredLink>
+          <HoveredLink href="/hobby">Hobby</HoveredLink>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
-          <div className="flex flex-col space-y-4 text-sm">
-            
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
-          </div>
-        </MenuItem>
+
+        {!isLoading && !user && (
+          <MenuItem setActive={setActive} active={active} item="Login">
+            <Link href="/api/auth/login" className="text-sm">
+              Log in
+            </Link>
+          </MenuItem>
+        )}
+
+        {user && (
+          <MenuItem setActive={setActive} active={active} item="Profile">
+            <div className="flex flex-col items-center text-sm space-y-4">
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={user.picture || "/default-profile.png"}
+                  alt="Profile"
+                  className="rounded-full"
+                  width={40}
+                  height={40}
+                />
+                <span>{user.name}</span>
+              </div>
+              <HoveredLink href="/profile">Profile</HoveredLink>
+              <Link href="/api/auth/logout" className="text-red-500">
+                Log out
+              </Link>
+            </div>
+          </MenuItem>
+        )}
       </Menu>
     </div>
   );
