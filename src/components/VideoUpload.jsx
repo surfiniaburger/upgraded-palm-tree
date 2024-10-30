@@ -1,8 +1,6 @@
-// src/components/VideoUpload.js
-
 import { useState } from 'react';
 import axios from 'axios';
-import styles from './VideoUpload.module.css'
+import styles from './VideoUpload.module.css';
 
 const VideoUpload = () => {
   const [patientId, setPatientId] = useState('');
@@ -60,17 +58,6 @@ const VideoUpload = () => {
           [keys[1]]: value,
         },
       });
-    } else if (keys.length === 3) {
-      setMetadata({
-        ...metadata,
-        [keys[0]]: {
-          ...metadata[keys[0]],
-          [keys[1]]: {
-            ...metadata[keys[0]][keys[1]],
-            [keys[2]]: value,
-          },
-        },
-      });
     }
   };
 
@@ -88,15 +75,9 @@ const VideoUpload = () => {
 
     try {
       setStatus('Uploading video...');
-      const response = await axios.post(
-        '/api/record/video',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
+      const response = await axios.post('/api/record/video', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       setStatus(`Success: ${response.data.message}`);
       // Reset form
       setPatientId('');
@@ -149,164 +130,56 @@ const VideoUpload = () => {
 
   return (
     <div className={styles.container}>
-    <header>Upload Video Record</header>
-    <form className={styles.formContainer} onSubmit={handleSubmit}>
-      <div>
-        <label>Patient ID:</label>
-        <input
-          type="text"
-          value={patientId}
-          onChange={(e) => setPatientId(e.target.value)}
-          required
-        />
-      </div>
-      <fieldset className={styles.fieldset}>
-        <legend className={styles.legend}>Metadata</legend>
-        {/* Study Information */}
-        <div>
-          <label className={styles.label}>Study Date:</label>
-          <input
-            type="date"
-            name="studyDate"
-            value={metadata.studyDate}
-            onChange={handleMetadataChange}
-          />
-        </div>
-        <div>
-          <label className={styles.label}>Study Time:</label>
-          <input
-            type="time"
-            name="studyTime"
-            value={metadata.studyTime}
-            onChange={handleMetadataChange}
-          />
-        </div>
-        <div>
-          <label className={styles.label}>Modality:</label>
+      <header className={styles.header}>Upload Video Record</header>
+      <form className={styles.formContainer} onSubmit={handleSubmit}>
+        <div className={styles.container}>
+          <label className={styles.label}>Patient ID:</label>
           <input
             type="text"
-            name="modality"
-            value={metadata.modality}
-            onChange={handleMetadataChange}
+            value={patientId}
+            onChange={(e) => setPatientId(e.target.value)}
+            required
+            className={styles.formInput}
           />
         </div>
+        <fieldset className={styles.fieldset}>
+          <legend className={styles.legend}>Metadata</legend>
+          <div>
+            <label className={styles.label}>Study Date:</label>
+            <input
+              type="date"
+              name="studyDate"
+              value={metadata.studyDate}
+              onChange={handleMetadataChange}
+              className={styles.formInput}
+            />
+          </div>
+          <div>
+            <label className={styles.label}>Study Time:</label>
+            <input
+              type="time"
+              name="studyTime"
+              value={metadata.studyTime}
+              onChange={handleMetadataChange}
+              className={styles.formInput}
+            />
+          </div>
+          {/* Add other input fields with appropriate styles */}
+        </fieldset>
         <div>
-          <label>Study Description:</label>
+          <label>Video File:</label>
           <input
-            type="text"
-            name="studyDescription"
-            value={metadata.studyDescription}
-            onChange={handleMetadataChange}
+            type="file"
+            accept="video/*"
+            onChange={(e) => setVideoFile(e.target.files[0])}
+            required
+            className={styles.formInput}
           />
         </div>
-        {/* Scanner Details */}
-        <fieldset  className={styles.fieldset}>
-          <legend>Scanner Details</legend>
-          <div>
-            <label className={styles.label}>Manufacturer:</label>
-            <input
-              type="text"
-              name="scannerDetails.manufacturer"
-              value={metadata.scannerDetails.manufacturer}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          <div>
-            <label className={styles.label}>Model:</label>
-            <input
-              type="text"
-              name="scannerDetails.model"
-              value={metadata.scannerDetails.model}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          <div>
-            <label>Serial Number:</label>
-            <input
-              type="text"
-              name="scannerDetails.serialNumber"
-              value={metadata.scannerDetails.serialNumber}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          <div>
-            <label>Software Version:</label>
-            <input
-              type="text"
-              name="scannerDetails.softwareVersion"
-              value={metadata.scannerDetails.softwareVersion}
-              onChange={handleMetadataChange}
-            />
-          </div>
-        </fieldset>
-        {/* Image Acquisition Parameters */}
-        <fieldset  className={styles.fieldset}>
-          <legend>Image Acquisition Parameters</legend>
-          <div>
-            <label>Repetition Time:</label>
-            <input
-              type="text"
-              name="imageAcquisitionParameters.repetitionTime"
-              value={metadata.imageAcquisitionParameters.repetitionTime}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          <div>
-            <label>Echo Time:</label>
-            <input
-              type="text"
-              name="imageAcquisitionParameters.echoTime"
-              value={metadata.imageAcquisitionParameters.echoTime}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          {/* Add more acquisition parameters as needed */}
-        </fieldset>
-        {/* Contrast Agent Details */}
-        <fieldset>
-          <legend>Contrast Agent</legend>
-          <div>
-            <label>Type:</label>
-            <input
-              type="text"
-              name="contrastAgent.type"
-              value={metadata.contrastAgent.type}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          <div>
-            <label>Dose:</label>
-            <input
-              type="text"
-              name="contrastAgent.dose"
-              value={metadata.contrastAgent.dose}
-              onChange={handleMetadataChange}
-            />
-          </div>
-          {/* Add more contrast agent details as needed */}
-        </fieldset>
-        <div>
-          <label>Notes:</label>
-          <textarea
-            name="notes"
-            value={metadata.notes}
-            onChange={handleMetadataChange}
-          />
-        </div>
-      </fieldset>
-      <div>
-        <label>Video File:</label>
-        <input
-          type="file"
-          accept="video/*"
-          onChange={(e) => setVideoFile(e.target.files[0])}
-          required
-        />
-      </div>
-      <button type="submit">Upload Video</button>
-    </form>
-    {status && <p className={styles.statusMessage}>{status}</p>}
-  </div>
+        <button type="submit" className={styles.submitButton}>Upload Video</button>
+      </form>
+      {status && <p className={styles.statusMessage}>{status}</p>}
+    </div>
   );
 };
 
