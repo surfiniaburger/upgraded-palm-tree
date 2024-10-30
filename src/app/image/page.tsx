@@ -2,14 +2,14 @@
 
 
 import { withPageAuthRequired } from '@auth0/nextjs-auth0/client';
-import ProofVerification from '@/components/ProofVerification'
+import Vision from '@/components/Vision'
 import Loading from '@/components/Loading';
 import ErrorMessage from '@/components/ErrorMessage';
 
 function Page() {
   return (
     <>
-     <ProofVerification/>
+     <Vision/>
     </>
   );
 }

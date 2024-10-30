@@ -1,47 +1,33 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Page() {
-  const [data, setData] = useState(null);
+  const [records, setRecords] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchRecords = async () => {
+      setIsLoading(true);
+      setError(null);
+
       try {
-        const apiKey = '9GvCqFCOzqmGjuAGOpu5x3RN4ak3mNoyQ57nO71BRuuS0ntu'; // Temporarily hardcode your API key for testing
-
-        const response = await fetch('https://34.49.13.123.nip.io/zk/v1/record', {
-          method: 'GET',
-          headers: {
-            'apikey': apiKey,
-          },
-        });
-
+        const response = await fetch('/api/record'); // Call your API route
         if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`API request failed with status ${response.status}: ${errorData.message}`);
+          throw new Error('Failed to fetch records');
         }
-
-        const responseData = await response.json();
-        setData(responseData);
-      } catch (err) {
-        console.error('Error fetching records:', err);
-        setError(err.message);
+        const data = await response.json();
+        console.log(data)
+        setRecords(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchRecords();
   }, []);
 
-  return (
-    <div>
-      <h1>Records</h1>
-      {error && <p>Error: {error}</p>}
-      {data ? (
-        <pre>{JSON.stringify(data, null, 2)}</pre>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </div>
-  );
+  // ... rest of your component logic to display records
 }
