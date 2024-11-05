@@ -30,7 +30,7 @@ function Navbar({ className }: { className?: string }) {
           </div>
         </MenuItem>
         <MenuItem setActive={setActive} active={active} item="Analytics">
-          <HoveredLink href="/">Dashboard</HoveredLink>
+          <HoveredLink href="/dashboard">Dashboard</HoveredLink>
         </MenuItem>
 
         {!isLoading && !user && (
