@@ -8,7 +8,7 @@ import { Nav } from "@/components/nav";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "medZK",
+  title: "Zero Kare",
   description: "-Powered by Circom and AI",
   openGraph: {
     images: [

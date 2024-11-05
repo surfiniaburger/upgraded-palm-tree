@@ -5,7 +5,7 @@ import { HomePage } from "@/components/homepage";
 // import { ModeToggle } from "@/components/ModeToggle";
 //import HealthRiskAssessment from "@/components/risk-assessment";
 import Chatbot from "@/components/Medbot"
-import Dashboard from "@/components/dashboard"
+
 
 export default function Home() {
   return (
@@ -13,7 +13,6 @@ export default function Home() {
       
       <HomePage/>
       <Chatbot/>
-      <Dashboard/>
       <Footer/>
     </div>
   );

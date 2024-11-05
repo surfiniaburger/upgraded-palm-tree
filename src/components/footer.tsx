@@ -7,9 +7,9 @@ const Footer = () => {
             
             {/* MedZK Logo and Description */}
             <div>
-              <h3 className="text-xl font-semibold text-white">MedZK</h3>
+              <h3 className="text-xl font-semibold text-white">Zero Kare</h3>
               <p className="mt-4">
-                MedZK provides privacy-preserving health assessments using cutting-edge zero-knowledge proof technology, ensuring your data stays secure.
+                Zero Kare provides privacy-preserving health assessments using cutting-edge zero-knowledge proof technology, ensuring your data stays secure.
               </p>
             </div>
   

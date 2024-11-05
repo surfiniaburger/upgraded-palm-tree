@@ -29,8 +29,8 @@ function Navbar({ className }: { className?: string }) {
             <HoveredLink href="/video">Video record Room</HoveredLink>
           </div>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Products">
-          <HoveredLink href="/">Hobby</HoveredLink>
+        <MenuItem setActive={setActive} active={active} item="Analytics">
+          <HoveredLink href="/">Dashboard</HoveredLink>
         </MenuItem>
 
         {!isLoading && !user && (
