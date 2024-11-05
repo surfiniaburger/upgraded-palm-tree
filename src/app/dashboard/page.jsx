@@ -9,7 +9,7 @@ import DiabetesDashboard from "@/components/dashboard";
 function Page() {
   return (
     <>
-     <DiabeticsDashboard/>
+     <DiabetesDashboard/>
     </>
   );
 }

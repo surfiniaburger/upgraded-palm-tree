@@ -25,7 +25,7 @@ function Navbar({ className }: { className?: string }) {
           <div className="flex flex-col space-y-4 text-sm">
             <HoveredLink href="/">Home</HoveredLink>
             <HoveredLink href="/external">Text Record Room</HoveredLink>
-            <HoveredLink href="/image">Image Record Room</HoveredLink>
+            <HoveredLink href="/">Image Record Room</HoveredLink>
             <HoveredLink href="/video">Video record Room</HoveredLink>
           </div>
         </MenuItem>
